@@ -31,6 +31,37 @@
           ]
         }
       ]
+    },
+    {
+      "name": "leg-vein-disease-symptom-checker-quiz",
+      "urls": [
+        "https://www.medtronic.com/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/quiz.html"
+      ],
+      "representativeUrl": "https://www.medtronic.com/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/quiz.html",
+      "description": "Interactive Vein Disease Symptom Checker quiz — a self-contained Vue single-page app, vendored and hosted via the custom 'quiz' block.",
+      "urlPattern": "/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/quiz*",
+      "blocks": [
+        {
+          "name": "quiz",
+          "instances": [
+            "#quizApp"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "quiz",
+          "selector": [
+            "#quizApp"
+          ],
+          "style": null,
+          "blocks": [
+            "quiz"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }
