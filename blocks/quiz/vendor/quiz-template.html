@@ -1,0 +1,302 @@
+<div id="quizApp" class="flex flex-col px-5 py-7">
+      <div class="max-w-6xl w-full mx-auto bg-white pt-20 pb-10 px-8 md:px-20">
+        <div v-if="!quizFinished">
+          <!-- Quiz -->
+          <div id="quiz" class="mb-16 mx-auto max-w-5xl">
+  <div class="mb-8 flex flex-row justify-between md:items-center w-full">
+    <a href="https://www.medtronic.com/en-us/l/patients/conditions/vein-disease.html">
+      <img class="w-full h-auto" style="max-width: 130px" src="medtronic_logo.png">
+    </a>
+
+    <a href="index.html" class="underline text-light-blue hover:no-underline hover:text-dark-blue">Start Over</a>
+  </div>
+  <div class="flex flex-col md:flex-row justify-between md:items-center mb-8 md:mb-10">
+    <p class="text-2xl text-light-blue">Vein Disease Symptom Checker</p>
+    <p>
+      Question <span>{{quizStep + 1}}</span> of
+      <span>{{quizData.length}}</span>
+    </p>
+  </div>
+
+  <div class="flex flex-col h-full justify-between" style="min-height: 500px">
+    <div>
+      <p id="quizQuestion" class="text-2xl md:text-3xl mb-10">
+        {{quizData[quizStep].question}}
+      </p>
+      <fieldset class="flex" v-if="quizData[quizStep].questionType === 'selectOne'">
+        <legend class="text-dark-blue text-base">Select one</legend>
+        <div class="mt-5 flex flex-col flex-wrap gap-x-32 md:gap-5 space-y-5 md:space-y-0">
+          <label v-for="(question, questionIndex) in quizData[quizStep].answers" :key="`${quizStep}-${questionIndex}`" class="inline-flex items-center">
+            <input class="form-radio text-light-blue border-2 border-light-blue w-6 h-6" type="radio" :name="`${quizStep}-${question}`" :value="question" v-model="quizResults[quizStep].responses">
+            <span class="ml-4 text-base text-dark-blue">{{question}}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="" v-else="">
+        <legend class="text-dark-blue text-base">Select all that apply</legend>
+        <div class="mt-5 flex flex-row flex-wrap md:gap-y-5 md:space-y-0 space-y-5 w-full">
+          <div v-for="(question, questionIndex) in quizData[quizStep].answers" :key="`${quizStep}-${questionIndex}`" class="w-full md:w-1/3 px-2">
+            <label>
+              <input class="form-checkbox text-light-blue border-2 border-light-blue w-6 h-6" type="checkbox" :name="`${quizStep}-${question}`" :value="question" v-model="quizResults[quizStep].responses">
+              <span class="ml-4 pr-2 text-base text-dark-blue">{{question}}</span>
+            </label>
+          </div>
+        </div>
+      </fieldset>
+      <p v-if="basicRequired" class="mt-5 text-sm text-light-blue">
+        Please check at least one option
+      </p>
+    </div>
+    <div class="mt-16 flex flex-col-reverse md:flex-row md:space-x-5 space-y-5 space-y-reverse md:space-y-0 content-end" :class="quizStep > 0 ? 'justify-between' : 'justify-end' ">
+      <button v-if="quizStep > 0" class="bg-white border-light-blue text-light-blue border-2 hover:underline hover:border-dark-blue hover:text-dark-blue font-medium text-xl md:text-2xl rounded-full px-8 py-4 block h-16" @click="prevStep()">
+        Back
+      </button>
+      <button v-if="quizStep == 7" class="bg-light-blue border-light-blue hover:underline hover:bg-dark-blue hover:border-dark-blue text-white font-medium text-xl md:text-2xl rounded-full px-8 py-4 block h-16" @click="nextStep()">
+        See Results
+      </button>
+      <button v-else="" class="bg-light-blue border-light-blue hover:underline hover:bg-dark-blue hover:border-dark-blue text-white font-medium text-xl md:text-2xl rounded-full px-8 py-4 block h-16" @click="nextStep()">
+        Next Question
+      </button>
+    </div>
+  </div>
+</div>
+
+          <!-- End quiz -->
+        </div>
+        <div v-else="">
+          <!-- Results -->
+          <div id="headerLogos" class="mb-32 mx-auto `">
+  <div class="mb-16 flex flex-row justify-between md:items-center w-full">
+    <a href="https://www.medtronic.com/en-us/l/patients/conditions/vein-disease.html">
+
+      <img class="w-full h-auto" style="max-width: 195px" src="medtronic_logo.png">
+    </a>
+    <a href="index.html" class="underline text-light-blue hover:no-underline hover:text-dark-blue">Start Over</a>
+  </div>
+  <h1 class="text-5xl text-light-blue mb-5">Your Symptom Checker Results</h1>
+  <div>
+    <div v-if="results === 'negative'">
+      <div>
+  <p class="mb-5 text-2xl text-dark-blue md:max-w-xl">
+    Your results indicate you are
+    <span class="font-bold">not likely at risk</span> for leg vein disease, or
+    chronic venous insufficiency (CVI).
+  </p>
+  <p class="text-base md:max-w-2xl">
+    If you have concerns, we recommend you discuss them with a doctor. If you
+    need help finding a doctor near you,
+    <a class="underline text-light-blue" href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments/find-doctor.html">please use our tool.</a>
+  </p>
+  <a href="https://www.medtronic.com/en-us/l/patients/conditions/vein-disease/about-vein-disease.html">
+    <button class="block px-8 py-4 mt-16 mb-16 text-2xl font-medium text-white transition-colors ease-in-out rounded-full bg-light-blue hover:bg-dark-blue hover:underline border-light-blue">
+    Learn More About Vein Disease
+  </button>
+</a>
+  <p>
+    UC202213131a EN ©2022 Medtronic. Medtronic and the Medtronic logo are
+    trademarks of Medtronic. All other brands are trademarks of a Medtronic
+    company. 07/2022
+  </p>
+</div>
+
+    </div>
+    <div v-else-if="results === 'positive'">
+      <div>
+  <p class="mb-5 text-2xl text-dark-blue md:w-2/3">
+    Your results indicate
+    <span class="font-bold">you may have leg vein disease, or chronic venous insufficiency
+      (CVI).</span>
+  </p>
+</div>
+
+<div class="flex flex-col justify-center mt-20 space-y-14 md:space-y-0 md:space-x-10 md:flex-row">
+  <div class="flex flex-col items-center w-full transition-colors ease-in-out text-dark-blue md:w-1/3">
+    <div class="w-11 text-light-blue" @click="downloadResults()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" viewBox="0 0 44.565 45.843">
+  <path d="M32.925 28.724a728.647 728.647 0 0 1-2.289 3.642c6.29 1.05 9.929 3.117 9.929 4.408 0 1.787-6.941 5.069-18.282 5.069S4 38.561 4 36.774c0-1.291 3.638-3.357 9.926-4.407a640.75 640.75 0 0 1-2.289-3.642C5.01 30.086 0 32.795 0 36.774c0 5.954 11.21 9.069 22.283 9.069s22.282-3.115 22.282-9.069c0-3.98-5.011-6.69-11.64-8.05" data-name="Path 9"></path>
+  <path d="M25.9.501A13.187 13.187 0 0 0 9.6 16.795a9.863 9.863 0 0 0 .769 2.042c2.699 4.951 11.912 19.164 11.912 19.164s9.21-14.21 11.918-19.161a9.863 9.863 0 0 0 .769-2.042A13.185 13.185 0 0 0 25.9.501m-3.617 18.272a5.229 5.229 0 1 1 5.23-5.23 5.23 5.23 0 0 1-5.23 5.23" data-name="Path 10"></path>
+</svg>
+
+    </div>
+    <p class="flex-1 w-2/3 mt-5 leading-none md:w-full">
+      If you need help finding a vein disease specialist, please click the
+      button below to locate a doctor or clinic near you.
+    </p>
+    <a class="md:w-full" href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments/find-doctor.html" target="_blank">
+      <h4 class="px-8 py-2 mt-5 text-sm text-center text-white transition-colors duration-200 ease-in-out rounded-full cursor-pointer md:px-0 md:w-full bg-light-blue hover:bg-dark-blue">
+        Find a Doctor
+      </h4>
+    </a>
+  </div>
+  <span class="vertical-line-complete"></span>
+  <div class="flex flex-col items-center w-full transition-colors ease-in-out text-dark-blue md:w-1/3">
+    <div class="w-11 text-light-blue">
+      <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" viewBox="0 0 44.705 45.843">
+  <path d="M11.176 14.681h6.71V0h8.943v14.681h6.7L22.356 32.293Z" data-name="Union 1"></path>
+  <path d="M-.002 45.851v-17.78h6.944v11.89h30.822v-11.89h6.942v17.78Z" data-name="Union 2"></path>
+</svg>
+
+    </div>
+    <p class="flex-1 w-2/3 mt-5 leading-none md:w-full">
+      Save your results to help guide your conversation with your doctor.
+      Download will begin automatically. If the file does not download, check
+      your browser settings.
+    </p>
+    <h4 @click="downloadResults()" class="px-8 py-2 mt-5 text-sm text-center text-white transition-colors duration-200 ease-in-out rounded-full cursor-pointer md:w-full md:px-0 bg-light-blue hover:bg-dark-blue">
+      Download My Results
+    </h4>
+  </div>
+  </div>
+</div>
+
+<div class="mt-14 text-dark-blue">
+  <div class="mb-14">
+    <h1 class="mb-3 text-3xl font-bold">What is leg vein disease?</h1>
+    <p class="mb-5">
+      Healthy leg veins have valves that keep blood flowing upward, back to the
+      heart. Leg vein disease occurs when the blood in an unhealthy vein flows
+      backward (referred to as reflux) and the vein is left untreated. This can
+      cause symptoms such as spider veins, varicose veins, discoloration,
+      swelling, heaviness, raised veins and leg ulcers. More than
+      <strong> 190 million people </strong> have CVI or varicose veins
+      globally.<sup>1 </sup>
+      <a target="_blank" class="underline" href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments.html">Learn more about leg vein disease.</a>
+    </p>
+    <p>
+      <strong>The good news is</strong> leg vein disease and varicose veins are
+      common &mdash; and treatable.
+    </p>
+  </div>
+
+  <div class="mb-14">
+    <h1 class="mb-3 text-3xl font-bold">
+      Medtronic offers two vein disease treatments
+    </h1>
+    <p class="mb-5">
+      Talk to your doctor about finding lasting relief for leg vein disease and
+      varicose veins with both of our minimally invasive therapies &mdash;
+      performed on a same-day outpatient basis.
+    </p>
+  </div>
+  <div class="flex flex-col space-y-10 md:flex-row md:space-x-20 md:space-y-0">
+    <div class="flex flex-col flex-1 w-full md:w-1/2">
+      <h4 class="mb-3 text-xl font-bold">VenaSeal™ procedure</h4>
+
+      <p class="flex-1 mb-5 text-base">
+        The VenaSeal procedure delivers a small amount of a specially formulated
+        medical adhesive to seal &mdash; or close &mdash; the diseased vein,
+        rerouting blood to nearby healthy veins and providing symptom relief.
+      </p>
+      <a href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments/venaseal-procedure.html" class="underline" target="_blank">Learn more about the VenaSeal procedure</a>
+    </div>
+    <div class="flex flex-col flex-1 w-full md:w-1/2">
+      <h4 class="mb-3 text-xl font-bold">ClosureFast™ procedure</h4>
+
+      <p class="flex-1 mb-5 text-base">
+        The ClosureFast procedure uses radiofrequency ablation energy or heat to
+        close the diseased vein, which redirects blood flow to healthy veins,
+        relieving symptoms.​
+      </p>
+      <a href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments/closurefast-procedure.html" class="underline" target="_blank">Learn more about the ClosureFast procedure</a>
+    </div>
+  </div>
+  <!-- Blue Block -->
+  <div class="w-full p-5 text-base text-white mt-14 bg-light-blue md:p-10 md:text-2xl">
+    <p>
+      To learn more about vein disease, visit our​
+      <a class="underline hover:no-underline hover:text-dark-gray" href="https://www.medtronic.com/en-us/l/patients/conditions/vein-disease/about-vein-disease.html" target="_blank">understanding leg vein disease page.</a>
+      We're here to provide you with tools to understand leg vein disease and
+      treatment possibilities. If you need help finding a vein disease
+      specialist, please use our
+      <a class="underline hover:no-underline hover:text-dark-gray" href="https://www.medtronic.com/en-us/l/patients/treatments-therapies/varicose-vein-treatments/find-doctor.html" target="_blank">doctor finder tool</a>
+      to locate a doctor or clinic near you.
+    </p>
+  </div>
+  <div class="mt-14">
+    <p class="text-dark-blue mb-7">
+      Best, <br>
+      The Vein Health Care Team at Medtronic
+    </p>
+    <a href="https://www.medtronic.com/en-us/l/patients/conditions/vein-disease.html">
+      <img class="w-32" src="medtronic_logo.png">
+    </a>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+          <!-- End quiz -->
+        </div>
+        <div v-if="quizFinished && results === 'positive'">
+          <div class="max-w-5xl mx-auto mt-12 mb-40 text-dark-blue">
+  <ol class="list-decimal list-inside">
+    <li>
+      Strategic Market Assessment: Chronic Venous Insufficiency. Dymedex
+      Consulting, LLC. November 2014.
+    </li>
+  </ol>
+
+  <div class="mt-8">
+    <p>VENASEAL™ CLOSURE SYSTEM</p>
+    <p>
+      <strong>Intended Use/Indications: </strong>The VenaSeal closure system
+      (VenaSeal system) is indicated for use in the permanent closure of lower
+      extremity superficial truncal veins, such as the great saphenous vein
+      (GSV), through endovascular embolization with coaptation. The VenaSeal
+      system is intended for use in adults with clinically symptomatic venous
+      reflux as diagnosed by duplex ultrasound (DUS).
+    </p>
+    <p>
+      <strong>Contraindications:</strong> Separate use of the individual
+      components of the VenaSeal closure system is contraindicated. These
+      components must be used as a system. The use of the VenaSeal system is
+      contraindicated when any of the following conditions exist: previous
+      hypersensitivity reactions to the VenaSeal adhesive or cyanoacrylates,
+      acute superficial thrombophlebitis, thrombophlebitis migrans, acute
+      sepsis.
+    </p>
+    <p>
+      <strong>Potential Adverse Effects of the Device on Health:</strong> The
+      potential adverse effects (e.g., complications) associated with the use of
+      the VenaSeal system include, but are not limited to, adverse reactions to
+      a foreign body (including, but not limited to, nonspecific mild
+      inflammation of the cutaneous and subcutaneous tissue), arteriovenous
+      fistula, bleeding from the access site, deep vein thrombosis (DVT), edema
+      in the treated leg, embolization, including pulmonary embolism (PE),
+      hematoma, hyperpigmentation, hypersensitivity or allergic reactions to
+      cyanoacrylates, such as urticaria, shortness of breath, and anaphylactic
+      shock, infection at the access site, pain, paresthesia, phlebitis,
+      superficial thrombophlebitis, urticaria, erythema, or ulceration may occur
+      at the injection site, vascular rupture and perforation, visible scarring.
+    </p>
+    <p>
+      Instructions for use can be found in the product labeling at
+      <a class="underline" href="http://manuals.medtronic.com" target="_blank">http://manuals.medtronic.com</a>
+    </p>
+    <p>
+      <strong>Caution:</strong> Federal (USA) law restricts these devices to
+      sale by or on the order of a physician.
+    </p>
+    <p class="mt-5">CLOSUREFAST™ RFA SYSTEM REFERENCE STATEMENT</p>
+    <p>
+      <strong>Important:</strong> Please reference the Instructions For Use
+      (IFU) for a complete listing of indications, contraindications, warnings
+      and precautions, adverse effects and suggested procedure.
+    </p>
+    <p>
+      <strong>Caution:</strong> Federal (USA) law restricts this device to sale
+      by or on the order of a physician.
+    </p>
+    <p class="mt-5">
+      UC202213131a EN ©2022 Medtronic. Medtronic and the Medtronic logo are
+      trademarks of Medtronic. All other brands are trademarks of a Medtronic
+      company. 07/2022
+    </p>
+  </div>
+</div>
+
+        </div>
+      </div>

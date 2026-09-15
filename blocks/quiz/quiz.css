@@ -1,0 +1,26 @@
+/*
+ * Quiz block styling.
+ *
+ * The quiz UI itself is fully styled inside the iframe (vendored Tailwind CSS).
+ * These rules only govern the host container: the iframe fills its section and
+ * the section sits on the grey page background like the original page.
+ */
+
+.quiz.block {
+  width: 100%;
+}
+
+.quiz.block .quiz-frame {
+  width: 100%;
+  border: 0;
+  display: block;
+}
+
+/* The quiz is a full-bleed experience: neutralise the default section card
+   padding/background so the iframe's own white card shows through cleanly. */
+.section.quiz-container {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
