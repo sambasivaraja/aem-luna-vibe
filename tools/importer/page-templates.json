@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "projectType": "doc"
+  },
+  "templates": [
+    {
+      "name": "leg-vein-disease-symptom-checker",
+      "urls": [
+        "https://www.medtronic.com/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/index.html"
+      ],
+      "representativeUrl": "https://www.medtronic.com/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/index.html",
+      "description": "Vein Disease Symptom Checker intro/landing page. Single section of editorial default content: linked logo, H1, intro paragraph, CTA button, and disclaimer paragraphs. No blocks.",
+      "urlPattern": "/content/dam/medtronic-wide/public/united-states/products/cardiac-vascular/cardiovascular/superficial-vein/symptom-checker-leg-vein-disease/leg-vein-disease-symptom-checker/*",
+      "blocks": [],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "intro",
+          "selector": [
+            ".max-w-5xl.bg-white",
+            "#headerLogos"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "#headerLogos a img",
+            "h1",
+            "p",
+            "a[href$=\"quiz.html\"]",
+            ".mt-16 p"
+          ]
+        }
+      ]
+    }
+  ]
+}

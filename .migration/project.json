@@ -1,0 +1,13 @@
+{
+  "type": "doc",
+  "features": [
+    "site-planning"
+  ],
+  "sites": {
+    "aem-luna-vibe": {
+      "libraryUrl": "https://main--aem-luna-vibe--sambasivaraja.aem.page/tools/sidekick/library.json",
+      "previewOrg": "sambasivaraja",
+      "previewSite": "aem-luna-vibe"
+    }
+  }
+}
